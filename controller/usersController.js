@@ -89,6 +89,34 @@ router.post('/update_editor_profile',isEditor,async(req,res)=>{
 })
 
 
+router.post('/delete_editor_profile',isAdministrator,async(req,res)=>{
+
+    try{
+
+        const { user_id } = req.body
+        
+        const delete_editor_profile = await Users.destroy({where: {
+            [Op.and]: [
+              { user_id: user_id } ,
+              { user_type: 2 }
+            ]
+        }
+        })
+        
+        
+       
+        
+        return res.status(200).send(OK( 'editor profile Deleted', 'editor profile Deleted', req));
+
+
+    }catch(e){
+        console.log(e)
+        return  res.status(500).send(INTERNAL_SERVER_ERROR(null, req))
+}
+
+})
+
+
 
 
 
